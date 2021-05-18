@@ -7,6 +7,7 @@ from joblib import Parallel, delayed
 
 def video_process(video_file_path, dst_root_path, ext, fps=-1, size=240):
     if ext != video_file_path.suffix:
+        print(ext)
         return
 
     ffprobe_cmd = ('ffprobe -v error -select_streams v:0 '
@@ -55,12 +56,14 @@ def video_process(video_file_path, dst_root_path, ext, fps=-1, size=240):
 
 def class_process(class_dir_path, dst_root_path, ext, fps=-1, size=240):
     if not class_dir_path.is_dir():
+        print(class_dir_path)
         return
 
     dst_class_path = dst_root_path / class_dir_path.name
     dst_class_path.mkdir(exist_ok=True)
 
     for video_file_path in sorted(class_dir_path.iterdir()):
+        print(video_file_path)
         video_process(video_file_path, dst_class_path, ext, fps, size)
 
 
@@ -107,7 +110,11 @@ if __name__ == '__main__':
         test_set_video_path = args.dir_path / 'test'
         if test_set_video_path.exists():
             class_dir_paths.append(test_set_video_path)
-
+        class_dir_paths = [args.dir_path]
+        for class_dir_path in class_dir_paths:
+            #print(class_dir_path)
+            class_process(class_dir_path, args.dst_path, ext, args.fps, args.size)
+        exit()
         status_list = Parallel(
             n_jobs=args.n_jobs,
             backend='threading')(delayed(class_process)(

@@ -5,29 +5,29 @@ from pathlib import Path
 def parse_opts():
     parser = argparse.ArgumentParser()
     parser.add_argument('--root_path',
-                        default=None,
+                        default="",
                         type=Path,
                         help='Root directory path')
     parser.add_argument('--video_path',
-                        default=None,
+                        default="/home/ubuntu/local/datasets/jpgUCF101/UCF101",
                         type=Path,
                         help='Directory path of videos')
     parser.add_argument('--annotation_path',
-                        default=None,
+                        default="/home/ubuntu/local/datasets/ucflist/ucf101_01.json",
                         type=Path,
                         help='Annotation file path')
     parser.add_argument('--result_path',
-                        default=None,
+                        default="/home/ubuntu/local/datasets/result",
                         type=Path,
                         help='Result directory path')
     parser.add_argument(
         '--dataset',
-        default='kinetics',
+        default='ucf101',
         type=str,
         help='Used dataset (activitynet | kinetics | ucf101 | hmdb51)')
     parser.add_argument(
         '--n_classes',
-        default=400,
+        default=101,
         type=int,
         help=
         'Number of classes (activitynet: 200, kinetics: 400 or 600, ucf101: 101, hmdb51: 51)'

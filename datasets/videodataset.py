@@ -30,7 +30,9 @@ def get_database(data, subset, root_path, video_path_formatter):
                 video_paths.append(Path(value['video_path']))
             else:
                 label = value['annotations']['label']
-                video_paths.append(video_path_formatter(root_path, label, key))
+                #print(root_path,key)
+                video_paths.append(root_path / key)
+                #video_paths.append(video_path_formatter(root_path, key))
 
     return video_ids, video_paths, annotations
 
@@ -45,8 +47,8 @@ class VideoDataset(data.Dataset):
                  temporal_transform=None,
                  target_transform=None,
                  video_loader=None,
-                 video_path_formatter=(lambda root_path, label, video_id:
-                                       root_path / label / video_id),
+                 video_path_formatter=(lambda root_path, video_id:
+                                       root_path / video_id),
                  image_name_formatter=lambda x: f'image_{x:05d}.jpg',
                  target_type='label'):
         self.data, self.class_names = self.__make_dataset(
@@ -88,6 +90,7 @@ class VideoDataset(data.Dataset):
                 label_id = -1
 
             video_path = video_paths[i]
+            print(video_path)
             if not video_path.exists():
                 continue
 

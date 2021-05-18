@@ -170,6 +170,8 @@ def get_train_utils(opt, model_parameters):
             train_data)
     else:
         train_sampler = None
+    print(11111111111111111)
+    print(train_data)
     train_loader = torch.utils.data.DataLoader(train_data,
                                                batch_size=opt.batch_size,
                                                shuffle=(train_sampler is None),
